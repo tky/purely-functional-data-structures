@@ -52,4 +52,17 @@ class CustomStackSpec extends AnyFlatSpec with Matchers {
       CustomStack.cons(2, CustomStack.cons(1, CustomStack.empty))
     )
   }
+
+  "A Stack" should "update" in {
+    val stack = CustomStack.cons(
+      3,
+      CustomStack.cons(2, CustomStack.cons(1, CustomStack.empty))
+    )
+    val updated = CustomStack.update(stack, 1, 8)
+
+    updated shouldEqual CustomStack.cons(
+      3,
+      CustomStack.cons(8, CustomStack.cons(1, CustomStack.empty))
+    )
+  }
 }

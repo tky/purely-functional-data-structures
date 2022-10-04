@@ -14,4 +14,10 @@ object Stack {
   def concat[A](xs: Stack[A], ys: Stack[A]): Stack[A] =
     if (isEmpty(xs)) ys
     else cons(head(xs), concat(tail(xs), ys))
+
+  def update[A](xs: Stack[A], i: Int, y: A): Stack[A] = (i, xs.list) match {
+    case (0, h :: hs) => cons(y, Stack(hs))
+    case (_, Nil)     => cons(y, empty)
+    case (_, h :: hs) => cons(h, update(Stack(hs), i - 1, y))
+  }
 }

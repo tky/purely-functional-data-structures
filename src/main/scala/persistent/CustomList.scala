@@ -30,4 +30,11 @@ object CustomStack {
       case Empty               => ys
       case CustomList(h, tail) => cons(h, concat(tail, ys))
     }
+
+  def update[A](xs: CustomStack[A], i: Int, y: A): CustomStack[A] =
+    (i, xs) match {
+      case (0, CustomList(h, hs)) => cons(y, hs)
+      case (_, Empty)             => cons(y, empty)
+      case (_, CustomList(h, hs)) => cons(h, update(hs, i - 1, y))
+    }
 }

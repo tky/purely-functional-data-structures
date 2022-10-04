@@ -36,4 +36,10 @@ class StackSpec extends AnyFlatSpec with Matchers {
 
     Stack.concat(stack2, stack1) shouldEqual (Stack(List(5, 4, 3, 2, 1)))
   }
+
+  "A Stack" should "update" in {
+    val stack = Stack.cons(3, Stack.cons(2, Stack.cons(1, Stack.empty)))
+    val updated = Stack.update(stack, 1, 9)
+    updated shouldEqual Stack.cons(3, Stack.cons(9, Stack.cons(1, Stack.empty)))
+  }
 }
