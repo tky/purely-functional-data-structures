@@ -1,0 +1,30 @@
+package persistent.tree
+
+sealed abstract class Tree[+A]
+
+case class Branch[A](
+    value: A,
+    left: Tree[A],
+    right: Tree[A]
+) extends Tree[A]
+
+case object Empty extends Tree
+
+object Tree {
+  def member[A](x: A, t: Tree[A])(implicit ordering: Ordering[A]): Boolean =
+    t match {
+      case Empty                     => false
+      case Branch(v, _, _) if v == x => true
+      case Branch(v, left, right) =>
+        if (ordering.compare(v, x) > 0) member(x, left) else member(x, right)
+    }
+
+  def insert[A](x: A, t: Tree[A])(implicit ordering: Ordering[A]): Tree[A] =
+    t match {
+      case Empty => Branch(x, Empty, Empty)
+      case Branch(v, l, r) =>
+        if (ordering.compare(x, v) < 0) Branch(v, insert(x, l), r)
+        else if (ordering.compare(x, v) > 0) Branch(v, l, insert(x, r))
+        else t
+    }
+}
