@@ -4,7 +4,9 @@ This directory contains the Scala source code from the Appendix of
     Chris Okasaki
     Cambridge University Press, 1998
 
+    https://github.com/amedama41/okasaki
+
 
 And thanks for some good hints!
 
-https://github.com/aistrate/Okasaki/tree/master/Original
+https://github.com/aistrate/Okasaki

@@ -31,4 +31,23 @@ class TreeSpec extends AnyFlatSpec with Matchers {
     val tree = Branch(2, Empty, Empty)
     Tree.insert(3, tree) shouldEqual Branch(2, Empty, Branch(3, Empty, Empty))
   }
+
+  "Tree" should "return true if contains the target, improved" in {
+    val tree = Branch(1, Empty, Empty)
+    Tree.member2(1, tree) shouldEqual true
+
+    val tree2 = Branch(2, Branch(1, Empty, Empty), Branch(3, Empty, Empty))
+    Tree.member2(2, tree2) shouldEqual true
+    Tree.member2(3, tree2) shouldEqual true
+  }
+
+  "Tree" should "insert a value to an empty tree, improved" in {
+    Tree.insert2(1, Empty) shouldEqual Branch(1, Empty, Empty)
+  }
+
+  "Tree" should "throw an excepiton with inserting a duplicated value" in {
+    assertThrows[IllegalArgumentException] {
+      Tree.insert2(1, Branch(1, Empty, Empty))
+    }
+  }
 }

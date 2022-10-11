@@ -27,4 +27,28 @@ object Tree {
         else if (ordering.compare(x, v) > 0) Branch(v, l, insert(x, r))
         else t
     }
+
+  // ex2.2
+  def member2[A](x: A, t: Tree[A])(implicit ordering: Ordering[A]): Boolean = {
+    def _go(x: A, t: Tree[A], tmp: A): Boolean = t match {
+      case Empty                   => false
+      case Branch(v, Empty, Empty) => v == x || tmp == x
+      case Branch(v, left, right) =>
+        if (ordering.compare(v, x) > 0) _go(x, left, v) else _go(x, right, v)
+    }
+
+    t match {
+      case Empty           => false
+      case Branch(v, _, _) => _go(x, t, v)
+    }
+  }
+
+  def insert2[A](x: A, t: Tree[A])(implicit ordering: Ordering[A]): Tree[A] =
+    t match {
+      case Empty => Branch(x, Empty, Empty)
+      case Branch(v, l, r) =>
+        if (ordering.compare(x, v) < 0) Branch(v, insert(x, l), r)
+        else if (ordering.compare(x, v) > 0) Branch(v, l, insert(x, r))
+        else throw new IllegalArgumentException()
+    }
 }
