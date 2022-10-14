@@ -43,6 +43,7 @@ object Tree {
     }
   }
 
+  // ex2.3
   def insert2[A](x: A, t: Tree[A])(implicit ordering: Ordering[A]): Tree[A] =
     t match {
       case Empty => Branch(x, Empty, Empty)
@@ -51,4 +52,23 @@ object Tree {
         else if (ordering.compare(x, v) > 0) Branch(v, l, insert(x, r))
         else throw new IllegalArgumentException()
     }
+
+  // ex2.4
+  // ???????
+  def insert3[A](x: A, t: Tree[A])(implicit ordering: Ordering[A]): Tree[A] =
+    t match {
+      case Empty => Branch(x, Empty, Empty)
+      case Branch(v, l, r) =>
+        if (ordering.compare(x, v) < 0) Branch(v, insert(x, l), r)
+        else if (ordering.compare(x, v) > 0) Branch(v, l, insert(x, r))
+        else throw new IllegalArgumentException()
+    }
+
+  def complete[A](x: A, d: Int): Tree[A] = d match {
+    case 0 => Branch(x, Empty, Empty)
+    case _ => {
+      val p = complete(x, d - 1)
+      Branch(x, p, p)
+    }
+  }
 }
