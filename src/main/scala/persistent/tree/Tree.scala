@@ -64,6 +64,7 @@ object Tree {
         else throw new IllegalArgumentException()
     }
 
+  // 2.5 (a)
   def complete[A](x: A, d: Int): Tree[A] = d match {
     case 0 => Branch(x, Empty, Empty)
     case _ => {
@@ -71,4 +72,20 @@ object Tree {
       Branch(x, p, p)
     }
   }
+
+  // 2.5 (b)
+  def create[A](x: A, d: Int): Tree[A] = d match {
+    case 0 => Empty
+    case n =>
+      if ((n - 1) % 2 == 0) {
+        val t = create(x, (n - 1) / 2)
+        Branch(x, t, t)
+      } else {
+        val (left, right) = create2(x, (n - 1) / 2)
+        Branch(x, left, right)
+      }
+  }
+
+  def create2[A](x: A, m: Int): (Tree[A], Tree[A]) =
+    (create(x, m), create(x, m + 1))
 }

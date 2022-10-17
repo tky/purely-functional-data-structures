@@ -57,4 +57,27 @@ class TreeSpec extends AnyFlatSpec with Matchers {
     val p = Branch('x', Empty, Empty)
     Tree.complete('x', 1) shouldEqual Branch('x', p, p)
   }
+
+  "#create" should "create a tree" in {
+    Tree.create('x', 0) shouldEqual Empty
+
+    Tree.create('x', 1) shouldEqual Branch('x', Empty, Empty)
+    print(Tree.create('x', 2))
+    Tree.create('x', 2) shouldEqual Branch(
+      'x',
+      Tree.create('x', 0),
+      Tree.create('x', 1)
+    )
+    Tree.create('x', 3) shouldEqual Branch(
+      'x',
+      Tree.create('x', 1),
+      Tree.create('x', 1)
+    )
+    Tree.create('x', 4) shouldEqual Branch(
+      'x',
+      Tree.create('x', 1),
+      Tree.create('x', 2)
+    )
+
+  }
 }
