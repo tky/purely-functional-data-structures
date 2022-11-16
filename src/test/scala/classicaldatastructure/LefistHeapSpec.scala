@@ -10,7 +10,7 @@ class LefistHeapSpec extends AnyFlatSpec with Matchers {
     LefistHeap.isEmpty(heap) shouldEqual (true)
   }
 
-  "LefistHeap#insert" should "insert a value to the empty Heap" in {
+  "LefistHeap#insert" should "insert a value to a Heap" in {
     val heap = LefistHeap.empty
     val h2 = LefistHeap.insert("A", heap)
 
@@ -22,5 +22,16 @@ class LefistHeapSpec extends AnyFlatSpec with Matchers {
 
     val h4 = LefistHeap.deleteMin(h3)
     LefistHeap.findMin(h4) shouldEqual ("B")
+  }
+
+  "LefistHeap#insert2" should "insert a value to a Heap" in {
+    val heap = LefistHeap.empty
+    val h2 = LefistHeap.insert2("A", heap)
+
+    LefistHeap.isEmpty(h2) shouldEqual (false)
+    LefistHeap.findMin(h2) shouldEqual ("A")
+
+    val h3 = LefistHeap.insert2("B", h2)
+    LefistHeap.findMin(h2) shouldEqual ("A")
   }
 }

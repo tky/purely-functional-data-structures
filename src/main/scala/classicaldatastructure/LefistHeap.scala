@@ -36,6 +36,15 @@ object LefistHeap {
     case T(_, x, a, b) => merge(a, b)
   }
 
+  // ex 3.2
+  def insert2[A](x: A, h: Heap[A])(implicit ordering: Ordering[A]): Heap[A] =
+    h match {
+      case E => T(1, x, E, E)
+      case T(r, y, a, b) =>
+        if (ordering.compare(x, y) < 0) T(1, x, h, E)
+        else makeT(y, a, insert2(x, b))
+    }
+
   private def rank[A](h: Heap[A]): Int = h match {
     case E             => 0
     case T(r, _, _, _) => r
