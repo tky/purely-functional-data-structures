@@ -34,4 +34,18 @@ class LefistHeapSpec extends AnyFlatSpec with Matchers {
     val h3 = LefistHeap.insert2("B", h2)
     LefistHeap.findMin(h2) shouldEqual ("A")
   }
+
+  "LefistHeap#fromList" should "create a Heap from a List" in {
+    val heap = LefistHeap.fromList(List("C", "A", "B", "D"))
+
+    LefistHeap.findMin(heap) shouldEqual ("A")
+    val h2 = LefistHeap.deleteMin(heap)
+    LefistHeap.findMin(h2) shouldEqual ("B")
+    val h3 = LefistHeap.deleteMin(h2)
+    LefistHeap.findMin(h3) shouldEqual ("C")
+    val h4 = LefistHeap.deleteMin(h3)
+    LefistHeap.findMin(h4) shouldEqual ("D")
+    val h5 = LefistHeap.deleteMin(h4)
+    LefistHeap.isEmpty(h5) shouldEqual (true)
+  }
 }

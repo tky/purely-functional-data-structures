@@ -45,6 +45,24 @@ object LefistHeap {
         else makeT(y, a, insert2(x, b))
     }
 
+  // ex 3.3
+  def fromList[A](xs: List[A])(implicit ordering: Ordering[A]): Heap[A] = {
+    val treeList: List[Heap[A]] = xs.map(makeT(_, E, E))
+    def mergeList(xs: List[Heap[A]]): Heap[A] = xs match {
+      case x :: Nil => x
+      case _ => {
+        // 隣り合うHeapをMergeする
+        val merges = xs.sliding(2, 2).toList.flatMap {
+          case (x :: y :: Nil) => Some(merge(x, y))
+          case x :: Nil        => Some(x)
+          case _               => None
+        }
+        mergeList(merges)
+      }
+    }
+    mergeList(treeList)
+  }
+
   private def rank[A](h: Heap[A]): Int = h match {
     case E             => 0
     case T(r, _, _, _) => r
